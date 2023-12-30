@@ -46,7 +46,7 @@ variable "billing_mode" {
 }
 
 variable "hash_key" {
-  description = "(Required) Defines hash key name and type for table DynamoDB"
+  description = "(Required, Forces new resource) Attribute to use as the hash (partition) key."
   type = object({
     name = string
     type = string
@@ -62,19 +62,25 @@ variable "hash_key" {
   }
 }
 
+variable "use_range_key" {
+  description = "(Optional) To use range key"
+  type        = bool
+  default     = false
+}
+
 variable "range_key" {
-  description = "(Optional) Defines hash key name and type for table DynamoDB"
+  description = "(Optional, Forces new resource) Attribute to use as the range (sort) key."
   type = object({
     name = string
     type = string
   })
-  nullable = false
+  default = null
   validation {
-    condition     = length(var.range_key.name) >= 3 && length(var.range_key.name) <= 255
+    condition     = var.range_key == null || (length(var.range_key.name) >= 3 && length(var.range_key.name) <= 255)
     error_message = "The attribute name can not is empty"
   }
   validation {
-    condition     = contains(["S", "N", "B"], var.range_key.type)
+    condition     = var.range_key == null || contains(["S", "N", "B"], var.range_key.type)
     error_message = "Range key unsupported"
   }
 }

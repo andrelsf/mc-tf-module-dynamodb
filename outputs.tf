@@ -15,5 +15,5 @@ output "this_aws_dynamodb_table_arn" {
 
 output "this_aws" {
   description = "DynamoDB Table Stream ARN"
-  value = aws_dynamodb_table.this.stream_arn
+  value       = aws_dynamodb_table.this.stream_arn
 }
