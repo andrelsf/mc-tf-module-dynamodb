@@ -1,0 +1,3 @@
+*.tf linguist-detectable=true
+*.tf linguist-language=HCL
+*.tfvars linguist-language=HCL
